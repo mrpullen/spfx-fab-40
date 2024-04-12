@@ -9,12 +9,93 @@
           "manifest": "./src/webparts/accordion/AccordionWebPart.manifest.json"
         }
       ]
+    },
+    "areachart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/areachart/AreachartWebPart.js",
+          "manifest": "./src/webparts/areachart/AreachartWebPart.manifest.json"
+        }
+      ]
+    },
+    "barchart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/barchart/BarchartWebPart.js",
+          "manifest": "./src/webparts/barchart/BarchartWebPart.manifest.json"
+        }
+      ]
+    },
+    "piechart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/piechart/PiechartWebPart.js",
+          "manifest": "./src/webparts/piechart/PiechartWebPart.manifest.json"
+        }
+      ]
+    },
+    "guagechart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/guagechart/GuagechartWebPart.js",
+          "manifest": "./src/webparts/guagechart/GuagechartWebPart.manifest.json"
+        }
+      ]
+    },
+    "heat-map-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/heatMapChart/HeatMapChartWebPart.js",
+          "manifest": "./src/webparts/heatMapChart/HeatMapChartWebPart.manifest.json"
+        }
+      ]
+    },
+    "horizontal-bar-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/horizontalBarChart/HorizontalBarChartWebPart.js",
+          "manifest": "./src/webparts/horizontalBarChart/HorizontalBarChartWebPart.manifest.json"
+        }
+      ]
+    },
+    "donut-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/donutChart/DonutChartWebPart.js",
+          "manifest": "./src/webparts/donutChart/DonutChartWebPart.manifest.json"
+        }
+      ]
+    },
+    "line-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/lineChart/LineChartWebPart.js",
+          "manifest": "./src/webparts/lineChart/LineChartWebPart.manifest.json"
+        }
+      ]
+    },
+    "vertical-bar-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/verticalBarChart/VerticalBarChartWebPart.js",
+          "manifest": "./src/webparts/verticalBarChart/VerticalBarChartWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "AccordionWebPartStrings": "lib/webparts/accordion/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
-    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "AreachartWebPartStrings": "lib/webparts/areachart/loc/{locale}.js",
+    "BarchartWebPartStrings": "lib/webparts/barchart/loc/{locale}.js",
+    "PiechartWebPartStrings": "lib/webparts/piechart/loc/{locale}.js",
+    "GuagechartWebPartStrings": "lib/webparts/guagechart/loc/{locale}.js",
+    "HeatMapChartWebPartStrings": "lib/webparts/heatMapChart/loc/{locale}.js",
+    "HorizontalBarChartWebPartStrings": "lib/webparts/horizontalBarChart/loc/{locale}.js",
+    "DonutChartWebPartStrings": "lib/webparts/donutChart/loc/{locale}.js",
+    "LineChartWebPartStrings": "lib/webparts/lineChart/loc/{locale}.js",
+    "VerticalBarChartWebPartStrings": "lib/webparts/verticalBarChart/loc/{locale}.js"
   }
 }
