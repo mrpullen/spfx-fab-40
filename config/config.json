@@ -81,6 +81,14 @@
           "manifest": "./src/webparts/verticalBarChart/VerticalBarChartWebPart.manifest.json"
         }
       ]
+    },
+    "head-shot-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/headShot/HeadShotWebPart.js",
+          "manifest": "./src/webparts/headShot/HeadShotWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -96,6 +104,7 @@
     "HorizontalBarChartWebPartStrings": "lib/webparts/horizontalBarChart/loc/{locale}.js",
     "DonutChartWebPartStrings": "lib/webparts/donutChart/loc/{locale}.js",
     "LineChartWebPartStrings": "lib/webparts/lineChart/loc/{locale}.js",
-    "VerticalBarChartWebPartStrings": "lib/webparts/verticalBarChart/loc/{locale}.js"
+    "VerticalBarChartWebPartStrings": "lib/webparts/verticalBarChart/loc/{locale}.js",
+    "HeadShotWebPartStrings": "lib/webparts/headShot/loc/{locale}.js"
   }
 }

@@ -1,0 +1,184 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.container {
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+  min-height:70vh;
+}
+
+.main {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  display: flex;
+}
+
+.middle {
+  flex:1;
+  flex-direction: row;
+  width: 100%;
+  display:flex;
+ 
+}
+
+.bottom {
+  width:100%;
+  flex-direction: column;
+  display:flex;
+}
+
+.videoContainer {
+  position: relative;
+  width: 95%;
+  margin: 5px;
+  height: -webkit-fill-available;
+  margin: 0 auto;
+}
+
+.video {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  width: 100%;
+  height: auto;
+  transform: scaleX(-1);
+}
+
+.canvas {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  width: 100%;
+  transform: scaleX(-1);
+}
+
+.canvasCapture {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  width: 100%;
+}
+
+
+.left {
+  flex:1;
+  width:50%;
+ 
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  .title {
+    font-size: 25px;
+  }
+  z-index:20;
+}
+
+
+.right {
+  flex:1;
+  width:50%;
+  
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  .title {
+    font-size: 25px;
+  }
+  z-index:20;
+}
+
+
+.backgroundButtons {
+  width: 100%;
+  display: flex;
+  justify-content:flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: 120px;
+  background-color: rgba(255,255,255,.5);
+  z-index: 30;
+  align-items: center;
+  padding-left:10px;
+}
+
+.bgbutton {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  padding: 10px 0;
+  margin: 5px;
+  font-size: 14px;
+  color: #fff;
+  background: #EE3c5f;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #374066, #2e3656);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  &:hover {
+    cursor: pointer;
+    -webkit-animation: button8 0.5s both;
+    animation: button8 0.5s both;
+    
+  }
+  
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 50px;
+  z-index: 30;
+
+  button {
+    position: relative;
+    width: 120px;
+    height: 45px;
+    padding: 10px 10px;
+    font-size: 14px;
+    color: #fff;
+    background: #EE3c5f;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #374066, #2e3656);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    &:hover {
+      cursor: pointer;
+      -webkit-animation: button8 0.5s both;
+      animation: button8 0.5s both;
+    }
+  }
+
+ 
+
+  @keyframes button8 {
+    0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+    100% {
+      -webkit-transform: scale(1.2);
+      transform: scale(1.2);
+    }
+  }
+}
