@@ -226,8 +226,8 @@ export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWe
       this.properties.chartData = chartData;
       this.properties.chartDataString = newValue;
     }
-    catch {
-
+    catch(e) {
+      console.log(e);
     }
   }
 
