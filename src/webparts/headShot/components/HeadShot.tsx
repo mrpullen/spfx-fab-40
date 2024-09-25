@@ -13,7 +13,7 @@ import "@pnp/sp/files";
 import "@pnp/sp/folders";
 import "@pnp/sp/site-users";
 import { getRandomString } from '@pnp/common';
-import html2canvas from 'html2canvas';
+import html2canvas, { Options } from 'html2canvas';
 import { IFileInfo } from '@pnp/sp/files';
 
 
@@ -27,26 +27,35 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
   const [datacol, setdatacol] = React.useState<Blob | null>();
 
 
+  const defaultBackground = props.backgrounds.find((background) => background.default);
 
   const capture = async (): Promise<void> => {
     if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && imagePreviewCanvasRef && imagePreviewCanvasRef.current) {
       const imgPreview = imagePreviewCanvasRef.current;
       const previewContext = imgPreview.getContext("2d");
       const videoContainer = document.getElementsByClassName(styles.videoContainer)[0] as HTMLElement;
-      const canvasElement = await html2canvas(videoContainer);
-      const webcam = webcamRef.current.video as HTMLVideoElement;
+      
+      const options: Partial<Options> = {
+        width: 400,
+        height: 400
+      };
+      
+      const canvasElement = await html2canvas(videoContainer, options );
+      //const webcam = webcamRef.current.video as HTMLVideoElement;
 
       // eslint-disable-next-line require-atomic-updates
-      imgPreview.width = webcam.videoWidth;
+      imgPreview.width = 400; //webcam.videoWidth;
       // eslint-disable-next-line require-atomic-updates
-      imgPreview.height = webcam.videoHeight;
+      imgPreview.height = 400; //webcam.videoHeight;
       canvasElement.toBlob((blob) => {
         if (blob && previewContext) {
-          const img = new Image();
+          const img = new Image(400, 400);
 
           img.onload = function () {
             imgPreview.style.backgroundImage = `url(${img.src})`;
             imgPreview.style.backgroundSize = "cover";
+            imgPreview.style.width = "400px";
+            imgPreview.style.height = "400px";
             //previewContext.drawImage(img, width, height);
           }
 
@@ -121,7 +130,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
 
   };
 
-  
+
   const save = async (): Promise<void> => {
     const sp = getSP();
     if (datacol && sp) {
@@ -130,10 +139,11 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
       if (user && user.UserPrincipalName) {
         fileName = `${user.UserPrincipalName.replace("@", "_").replace(".", "_")}.png`;
       }
-      const fileInfo: IFileInfo =await sp.web.lists.getById(props.listName).rootFolder.files.addUsingPath(fileName, datacol, { Overwrite: true});
+
+      const fileInfo: IFileInfo = await sp.web.lists.getById(props.listName).rootFolder.files.addUsingPath(fileName, datacol, { Overwrite: true });
       console.log(fileInfo);
-      }
-      return;
+    }
+    return;
   };
 
 
@@ -153,7 +163,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
 
       if (bodypixnet && tempCtx) {
         // draw mask on tempCanvas
-       
+
         const segmentation = await bodypixnet.segmentPerson(webcam);
         const mask = bodyPix.toMask(segmentation);
         tempCtx.putImageData(mask, 0, 0);
@@ -164,7 +174,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
         // use destination-out, then only masked area will be removed
         context.globalCompositeOperation = "destination-out";
         context.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
-       context.restore();
+        context.restore();
 
       }
 
@@ -212,25 +222,43 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
 
 
   React.useEffect(() => {
-    
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    bodyPix.load().then((net: bodyPix.BodyPix) => {
-      setBodypixnet(net); 
+    bodyPix.load().then(async (net: bodyPix.BodyPix) => {
+      setBodypixnet(net);
     });
 
   }, []);
- 
+
+
+
+
+
   React.useEffect(() => {
-    const defaultBackground = props.backgrounds.find((background) => background.default);
+   
+      if (defaultBackground) {
+        const ms: number = 500;
+        const awaitReady = (): void => {
+          if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && bodypixnet) {
+            clickHandler(defaultBackground).then(() => {
+              console.log("Default Loaded");
+            }).catch((err) => {
+              console.log(err);
+              setTimeout(awaitReady, ms);
 
-    if (defaultBackground) {
-      // eslint-disable-next-line no-void
-      void clickHandler(defaultBackground);
+            })
+          }
+          else {
+            setTimeout(awaitReady, ms);
+          }
+        };
+
+        setTimeout(awaitReady, ms);
+      
     }
-  },[bodypixnet, canvasRef, webcamRef]);
+  }, [webcamRef, webcamRef.current, canvasRef, canvasRef.current, bodypixnet]);
 
 
-  
   return (
     <div className={styles.container}>
 
@@ -240,14 +268,14 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
           <div className={styles.left}>
             <h3>WebCam</h3>
             <div id="videoContainer" className={styles.videoContainer}>
-              <Webcam audio={false} ref={webcamRef} className={styles.video} screenshotFormat="image/png" />
+              <Webcam audio={false} ref={webcamRef} className={styles.video} screenshotFormat="image/png" width={400} height={400} />
               <canvas ref={canvasRef} className={styles.canvas} />
             </div>
             <div className={styles.buttons}>
               <button onClick={() => capture()} key="capture">Capture</button>
             </div>
           </div>
-         
+
           <div className={styles.right}>
             <h3>Preview</h3>
             <div id="videoContainer" className={styles.videoContainer}>
@@ -260,7 +288,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
           </div>
 
         </div>
-       
+
         <div className={styles.bottom}>
           <h4 className={styles.title}>Select Backgrounds</h4>
           <div className={styles.backgroundButtons}>
@@ -268,7 +296,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
               return <button className={styles.bgbutton} style={{
                 backgroundImage: `url('${background.link}')`,
                 backgroundSize: 'cover'
-              }} onClick={() => clickHandler(background)} key={i}>{background.title}</button>
+              }} onLoad={async () => { if (defaultBackground && background.link === defaultBackground.link) { await clickHandler(background); } }} onClick={() => clickHandler(background)} key={i}>{background.title}</button>
             })}
           </div>
 

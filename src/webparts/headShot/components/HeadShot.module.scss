@@ -33,9 +33,9 @@
 
 .videoContainer {
   position: relative;
-  width: 95%;
+  width: 400px;
+  height: 400px;
   margin: 5px;
-  height: -webkit-fill-available;
   margin: 0 auto;
 }
 
@@ -46,8 +46,8 @@
   left: 0;
   right: 0;
   z-index: 9;
-  width: 100%;
-  height: auto;
+  width: 400px;
+  height: 400px;
   transform: scaleX(-1);
 }
 
@@ -58,7 +58,8 @@
   left: 0;
   right: 0;
   z-index: 9;
-  width: 100%;
+  width: 400px;
+  height: 400px;
   transform: scaleX(-1);
 }
 
@@ -69,7 +70,8 @@
   left: 0;
   right: 0;
   z-index: 9;
-  width: 100%;
+  width: 400px;
+  height: 400px;
 }
 
 
@@ -153,12 +155,12 @@
   button {
     position: relative;
     width: 120px;
-    height: 45px;
-    padding: 10px 10px;
+    margin: 10px !important;
+    height: auto !important; // 45px;
+    padding: 5px !important;
     font-size: 14px;
     color: #fff;
-    background: #EE3c5f;
-    border-radius: 30px;
+    border-radius: 5px;
     background: linear-gradient(145deg, #374066, #2e3656);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
