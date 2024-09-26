@@ -6,7 +6,7 @@ import * as bodyPix from "@tensorflow-models/body-pix";
 import "@tensorflow/tfjs-core";
 import "@tensorflow/tfjs-converter";
 import "@tensorflow/tfjs-backend-webgl";
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, mergeStyleSets } from '@fluentui/react';
 import { getSP } from '../../../pnpjs-config';
 import "@pnp/sp/webs";
 import "@pnp/sp/files";
@@ -34,13 +34,13 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
       const imgPreview = imagePreviewCanvasRef.current;
       const previewContext = imgPreview.getContext("2d");
       const videoContainer = document.getElementsByClassName(styles.videoContainer)[0] as HTMLElement;
-      
+
       const options: Partial<Options> = {
         width: 400,
         height: 400
       };
-      
-      const canvasElement = await html2canvas(videoContainer, options );
+
+      const canvasElement = await html2canvas(videoContainer, options);
       //const webcam = webcamRef.current.video as HTMLVideoElement;
 
       // eslint-disable-next-line require-atomic-updates
@@ -235,32 +235,32 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
 
 
   React.useEffect(() => {
-   
-      if (defaultBackground) {
-        const ms: number = 500;
-        const awaitReady = (): void => {
-          if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && bodypixnet) {
-            try {
-              clickHandler(defaultBackground).then(() => {
-                console.log("Default Loaded");
-              }).catch((err) => {
-                console.log(err);
-                setTimeout(awaitReady, ms);
 
-              });
-            }
-            catch(err) { 
-              console.error(err);
+    if (defaultBackground) {
+      const ms: number = 500;
+      const awaitReady = (): void => {
+        if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && bodypixnet) {
+          try {
+            clickHandler(defaultBackground).then(() => {
+              console.log("Default Loaded");
+            }).catch((err) => {
+              console.log(err);
               setTimeout(awaitReady, ms);
-            }
+
+            });
           }
-          else {
+          catch (err) {
+            console.error(err);
             setTimeout(awaitReady, ms);
           }
-        };
+        }
+        else {
+          setTimeout(awaitReady, ms);
+        }
+      };
 
-        setTimeout(awaitReady, ms);
-      
+      setTimeout(awaitReady, ms);
+
     }
   }, [webcamRef, webcamRef.current, canvasRef, canvasRef.current, bodypixnet]);
 
@@ -299,10 +299,58 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
           <h4 className={styles.title}>Select Background</h4>
           <div className={styles.backgroundButtons}>
             {props.backgrounds.map(function (background, i) {
-              return <button className={styles.bgbutton} style={{
-                backgroundImage: `url('${background.link}')`,
-                backgroundSize: 'cover'
-              }} onLoad={async () => { if (defaultBackground && background.link === defaultBackground.link) { await clickHandler(background); } }} onClick={() => clickHandler(background)} key={i}>{background.title}</button>
+
+              const backgroundButton = mergeStyleSets({
+                bgButton: {
+                  "position": "absolute",
+                  "overflow": "hidden",
+                  "transform": "scaleX(1)",
+                  "width": "100px",
+                  "height": "100px",
+                  "padding": "10px 0",
+                  "margin": "5px",
+                  "fontSize": "14px",
+                  "color": "#fff",
+                  borderRadius: "30px",
+                  webkitBackfaceVisibility: "hidden",
+                  backfaceVisibility: "hidden",
+                  ":hover": {
+                    width: "110px",
+                    height: "110px",
+                    "::before": {
+                      width: "200%",
+                      height: "200%",
+                      top: "-50%",
+                      left: "-50%",
+                      transform: "scaleX(-1)",
+                      zIndex: "-1",
+                      content: "''",
+                      position: "absolute",
+                      backgroundImage: `url('${background.link}')`,
+                      backgroundSize: "cover",
+                      cursor: "pointer",
+                      "-webkit-animation": "button8 0.5s both",
+                      animation: "button8 0.5s both"
+                    }
+                  },
+
+                  "::before": {
+                    width: "200%",
+                    height: "200%",
+                    top: "-50%",
+                    left: "-50%",
+                    transform: "scaleX(-1)",
+                    zIndex: "-1",
+                    content: "''",
+                    position: "absolute",
+                    backgroundImage: `url('${background.link}')`,
+                    backgroundSize: "cover",
+                    
+                  }
+                }
+              });
+
+              return <button className={backgroundButton.bgButton} onClick={() => clickHandler(background)} key={i}>{background.title}</button>
             })}
           </div>
 
