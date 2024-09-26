@@ -240,13 +240,19 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
         const ms: number = 500;
         const awaitReady = (): void => {
           if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && bodypixnet) {
-            clickHandler(defaultBackground).then(() => {
-              console.log("Default Loaded");
-            }).catch((err) => {
-              console.log(err);
-              setTimeout(awaitReady, ms);
+            try {
+              clickHandler(defaultBackground).then(() => {
+                console.log("Default Loaded");
+              }).catch((err) => {
+                console.log(err);
+                setTimeout(awaitReady, ms);
 
-            })
+              });
+            }
+            catch(err) { 
+              console.error(err);
+              setTimeout(awaitReady, ms);
+            }
           }
           else {
             setTimeout(awaitReady, ms);
@@ -290,7 +296,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
         </div>
 
         <div className={styles.bottom}>
-          <h4 className={styles.title}>Select Backgrounds</h4>
+          <h4 className={styles.title}>Select Background</h4>
           <div className={styles.backgroundButtons}>
             {props.backgrounds.map(function (background, i) {
               return <button className={styles.bgbutton} style={{
