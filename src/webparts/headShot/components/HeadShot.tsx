@@ -27,7 +27,7 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
   const [datacol, setdatacol] = React.useState<Blob | null>();
 
 
-  const defaultBackground = props.backgrounds.find((background) => background.default);
+  //const defaultBackground = props.backgrounds.find((background) => background.default);
 
   const capture = async (): Promise<void> => {
     if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && imagePreviewCanvasRef && imagePreviewCanvasRef.current) {
@@ -229,40 +229,6 @@ function HeadShot(props: IHeadShotProps): JSX.Element {
     });
 
   }, []);
-
-
-
-
-
-  React.useEffect(() => {
-
-    if (defaultBackground) {
-      const ms: number = 500;
-      const awaitReady = (): void => {
-        if (webcamRef && webcamRef.current && canvasRef && canvasRef.current && bodypixnet) {
-          try {
-            clickHandler(defaultBackground).then(() => {
-              console.log("Default Loaded");
-            }).catch((err) => {
-              console.log(err);
-              setTimeout(awaitReady, ms);
-
-            });
-          }
-          catch (err) {
-            console.error(err);
-            setTimeout(awaitReady, ms);
-          }
-        }
-        else {
-          setTimeout(awaitReady, ms);
-        }
-      };
-
-      setTimeout(awaitReady, ms);
-
-    }
-  }, [webcamRef, webcamRef.current, canvasRef, canvasRef.current, bodypixnet]);
 
 
   return (
