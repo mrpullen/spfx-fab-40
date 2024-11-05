@@ -1,8 +1,8 @@
 import { DisplayMode } from "@microsoft/sp-core-library";
-import { AccordionData } from "../AccordionData";
+import { ISectionData } from "../../../model/SectionData";
 
 export interface IAccordionListProps {
-  accordionData: Array<AccordionData>;
+  accordionData: Array<ISectionData>;
   displayMode: DisplayMode;
-  updateContent: (accordionItem: AccordionData, text: string) => string;
+  updateContent: (accordionItem: ISectionData, text: string) => string;
 }

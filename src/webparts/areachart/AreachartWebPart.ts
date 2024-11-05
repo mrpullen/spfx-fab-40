@@ -221,10 +221,17 @@ export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWe
   private onChartDataChanged(newValue: string): void {
     try 
     {
+      if(newValue === undefined) {
+          const chartData: IChartProps = defaultChartData;
+          this.properties.chartData = chartData;
+          this.properties.chartDataString = JSON.stringify(defaultChartData);
+      }
+      else {
       //essentially don't set the new data string value if it doesn't parse.
       const chartData:IChartProps = JSON.parse(newValue);
       this.properties.chartData = chartData;
       this.properties.chartDataString = newValue;
+      }
     }
     catch(e) {
       console.log(e);
@@ -232,10 +239,21 @@ export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWe
   }
 
   public render(): void {
+    
+    let chartData = defaultChartData;
+    try {
+      if(this.properties.chartDataString) {
+        chartData = JSON.parse(this.properties.chartDataString);
+      }
+    }
+    catch {
+      chartData = defaultChartData;
+    }
+
     const element: React.ReactElement<IAreaChartComponentProps> = React.createElement(
       AreaChartComponent,
       {
-        chartData: JSON.parse(this.properties.chartDataString) ? JSON.parse(this.properties.chartDataString) : defaultChartData,
+        chartData: chartData
       }
     );
 
@@ -263,11 +281,13 @@ export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWe
               groupFields: [
                 PropertyFieldMonacoEditor('chartDataString', {
                   key: 'chartDataEditor',
-                  value: this.properties.chartDataString,
+                  
+                  value: this.properties.chartDataString !== "" && this.properties.chartDataString !== undefined ? this.properties.chartDataString : JSON.stringify(defaultChartData),
                   showMiniMap: true,
                   onChange: this.onChartDataChanged,
                   language:"json",
-                  showLineNumbers:true
+                  showLineNumbers:true,
+                  
                 }),
               ]
             }

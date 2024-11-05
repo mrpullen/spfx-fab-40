@@ -1,5 +1,5 @@
 
-export interface AccordionData {
+export interface ISectionData {
   uniqueId: string;
   title: string;
   defaultCollapsed: boolean;

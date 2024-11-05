@@ -9,6 +9,7 @@
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "outDir": "lib",
     "inlineSources": false,

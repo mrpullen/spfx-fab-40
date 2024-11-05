@@ -1,67 +1,72 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { DisplayMode, Version } from '@microsoft/sp-core-library';
+import { Version } from '@microsoft/sp-core-library';
 import {
-  type IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneChoiceGroup,
+  type IPropertyPaneConfiguration
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
-import * as strings from 'AccordionWebPartStrings';
-import AccordionList from './components/AccordionList';
-import { IAccordionListProps } from './components/IAccordionListProps';
-
-
-import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
-import { initializeIcons } from '@fluentui/react';
+import * as strings from 'PivotWebPartStrings';
+import PivotControl from './components/PivotControl';
 import { ISectionData } from '../../model/SectionData';
+import { initializeIcons, PivotLinkFormatType } from '@fluentui/react';
+import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls';
+import { IPivotControlProps } from './components/IPivotControlProps';
 
-export interface IAccordionWebPartProps {
-  description: string;
-  accordionData: Array<ISectionData>;
-  displayMode: DisplayMode;
+export interface IPivotWebPartProps {
+  
+  sectionData: Array<ISectionData>;
+  linkFormat: PivotLinkFormatType;
 }
 
-export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWebPartProps> {
+export default class PivotWebPart extends BaseClientSideWebPart<IPivotWebPartProps> {
 
-  public onInit(): Promise<void> {
+  _environmentMessage: string;
+  _isDarkTheme: boolean;
+
+
+
+  public render(): void {
+    const element: React.ReactElement<IPivotControlProps> = React.createElement(
+      PivotControl,
+      {
+        sectionData: this.properties.sectionData ? this.properties.sectionData: [],
+        linkFormat: this.properties.linkFormat ? this.properties.linkFormat: 'tabs',
+        displayMode: this.displayMode,
+        updateContent: this.updateSectionDataContent.bind(this),
+      }
+    );
+
+    ReactDom.render(element, this.domElement);
+  }
+
+
+  private updateSectionDataContent(sectionItemData: ISectionData, newContent: string): string {
+    const index = this.properties.sectionData.findIndex((sectionData) => sectionData.uniqueId === sectionItemData.uniqueId);
+    if(index >= 0 && index < this.properties.sectionData.length) {
+      this.properties.sectionData[index].content = newContent;
+    }
+    return newContent;
+  }
+ 
+
+  protected onInit(): Promise<void> {
     const promise = new Promise<void>((resolve) => {
       initializeIcons();
       resolve();
     })
     return promise;
   }
-  
- 
-  public render(): void {
-    
-    const element: React.ReactElement<IAccordionListProps> = React.createElement(
-      AccordionList,
-      {
-        accordionData: this.properties.accordionData ? this.properties.accordionData: [],
-        displayMode: this.displayMode,
-        updateContent: this.updateAccordionDataContent.bind(this),
-       }
-    );
 
-    ReactDom.render(element, this.domElement);
-  }
-
-  private updateAccordionDataContent(accordionItemData: ISectionData, newContent: string): string {
-    const index = this.properties.accordionData.findIndex((accordionItem) => accordionItem.uniqueId === accordionItemData.uniqueId);
-    if(index >= 0 && index < this.properties.accordionData.length) {
-      this.properties.accordionData[index].content = newContent;
-    }
-    return newContent;
-  }
- 
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
     if (!currentTheme) {
       return;
     }
 
+    this._isDarkTheme = !!currentTheme.isInverted;
     const {
       semanticColors
     } = currentTheme;
@@ -93,23 +98,32 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneChoiceGroup('linkFormat', {
+                  options: [
+                    {
+                      key: "links",
+                      text: "Links"
+                    },
+                    { key: "tabs",
+                      text: "Tabs"
+                    }
+                  ],
+                  label: "Pivot Style"
                 }),
-                PropertyFieldCollectionData('accordionData', {
-                  key: 'accordingDataKeyId',
+                PropertyFieldCollectionData('sectionData', {
+                  key: 'sectionDataKeyId',
                   label: 'Section Data',
-                  panelHeader: 'Accordion Data',
+                  panelHeader: 'Section Data',
                   manageBtnLabel: '',
                   fields: [
                     {
                       "id": "title",
-                      "title": "Title",
+                      "title": "Label",
                       "type": CustomCollectionFieldType.string,
                     },
                     {
                       "id": "defaultCollapsed",
-                      "title": "Is Collapsed",
+                      "title": "Is Open",
                       "type": CustomCollectionFieldType.boolean,
                       "defaultValue": false,
                       
@@ -139,7 +153,7 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
                     },
 
                   ],
-                  value: this.properties.accordionData ? this.properties.accordionData: [],
+                  value: this.properties.sectionData ? this.properties.sectionData: [],
                 })
               ]
             }

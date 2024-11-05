@@ -89,6 +89,22 @@
           "manifest": "./src/webparts/headShot/HeadShotWebPart.manifest.json"
         }
       ]
+    },
+    "pivot-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/pivot/PivotWebPart.js",
+          "manifest": "./src/webparts/pivot/PivotWebPart.manifest.json"
+        }
+      ]
+    },
+    "quick-poll-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/quickPoll/QuickPollWebPart.js",
+          "manifest": "./src/webparts/quickPoll/QuickPollWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -105,6 +121,8 @@
     "DonutChartWebPartStrings": "lib/webparts/donutChart/loc/{locale}.js",
     "LineChartWebPartStrings": "lib/webparts/lineChart/loc/{locale}.js",
     "VerticalBarChartWebPartStrings": "lib/webparts/verticalBarChart/loc/{locale}.js",
-    "HeadShotWebPartStrings": "lib/webparts/headShot/loc/{locale}.js"
+    "HeadShotWebPartStrings": "lib/webparts/headShot/loc/{locale}.js",
+    "PivotWebPartStrings": "lib/webparts/pivot/loc/{locale}.js",
+    "QuickPollWebPartStrings": "lib/webparts/quickPoll/loc/{locale}.js"
   }
 }
