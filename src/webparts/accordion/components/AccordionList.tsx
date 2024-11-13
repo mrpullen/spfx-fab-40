@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styles from './AccordionList.module.scss';
 import type { IAccordionListProps } from './IAccordionListProps';
 import { Accordion } from '@pnp/spfx-controls-react/lib/Accordion';
 import { DisplayMode } from '@microsoft/sp-core-library';
@@ -23,7 +22,7 @@ export default class AccordionList extends React.Component<IAccordionListProps, 
 
     return (
       <React.Fragment>
-      <section className={`${styles.accordion}`}>
+      <section>
      
       {accordionData.map((accordionItem: ISectionData) => {
         return (<Accordion key={accordionItem.uniqueId} title={accordionItem.title} collapsedIcon={accordionItem.collapsedIcon} expandedIcon={accordionItem.expandedIcon} defaultCollapsed={accordionItem.defaultCollapsed}> 
