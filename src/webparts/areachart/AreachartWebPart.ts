@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
@@ -7,243 +8,100 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'AreachartWebPartStrings';
 import AreaChartComponent from './components/AreaChartComponent';
 import { IAreaChartComponentProps } from './components/IAreaChartComponentProps';
-import { PropertyFieldMonacoEditor } from '@pnp/spfx-property-controls/lib/PropertyFieldMonacoEditor';
-import { IChartProps } from '@fluentui/react-charting';
 
-export interface IAreachartWebPartProps {
-  description: string;
-  chartData: IChartProps;
-  chartDataString: string;
+import { CustomCollectionFieldType, PropertyFieldCollectionData } from '@pnp/spfx-property-controls';
+import DataModal from '../../components/DataModal';
+
+
+export interface IChartDataset {
+  label: string;
+  data: Array<IChartDataPoints>;
+  fillColor: string;
+  lineColor: string;
+  fill: string;
+  smooth: boolean;
 }
 
-const chart1Points = [
-  {
-    x: 20,
-    y: 7000,
-    xAxisCalloutData: '2018/01/01',
-    yAxisCalloutData: '35%',
-  },
-  {
-    x: 25,
-    y: 9000,
-    xAxisCalloutData: '2018/01/15',
-    yAxisCalloutData: '45%',
-  },
-  {
-    x: 30,
-    y: 13000,
-    xAxisCalloutData: '2018/01/28',
-    yAxisCalloutData: '65%',
-  },
-  {
-    x: 35,
-    y: 15000,
-    xAxisCalloutData: '2018/02/01',
-    yAxisCalloutData: '75%',
-  },
-  {
-    x: 40,
-    y: 11000,
-    xAxisCalloutData: '2018/03/01',
-    yAxisCalloutData: '55%',
-  },
-  {
-    x: 45,
-    y: 8760,
-    xAxisCalloutData: '2018/03/15',
-    yAxisCalloutData: '43%',
-  },
-  {
-    x: 50,
-    y: 3500,
-    xAxisCalloutData: '2018/03/28',
-    yAxisCalloutData: '18%',
-  },
-  {
-    x: 55,
-    y: 20000,
-    xAxisCalloutData: '2018/04/04',
-    yAxisCalloutData: '100%',
-  },
-  {
-    x: 60,
-    y: 17000,
-    xAxisCalloutData: '2018/04/15',
-    yAxisCalloutData: '85%',
-  },
-  {
-    x: 65,
-    y: 1000,
-    xAxisCalloutData: '2018/05/05',
-    yAxisCalloutData: '5%',
-  },
-  {
-    x: 70,
-    y: 12000,
-    xAxisCalloutData: '2018/06/01',
-    yAxisCalloutData: '60%',
-  },
-  {
-    x: 75,
-    y: 6876,
-    xAxisCalloutData: '2018/01/15',
-    yAxisCalloutData: '34%',
-  },
-  {
-    x: 80,
-    y: 12000,
-    xAxisCalloutData: '2018/04/30',
-    yAxisCalloutData: '60%',
-  },
-  {
-    x: 85,
-    y: 7000,
-    xAxisCalloutData: '2018/05/04',
-    yAxisCalloutData: '35%',
-  },
-  {
-    x: 90,
-    y: 10000,
-    xAxisCalloutData: '2018/06/01',
-    yAxisCalloutData: '50%',
-  },
-];
 
-const chart2Points = [
-  {
-    x: 20,
-    y: 7200,
-    xAxisCalloutData: '2018/01/01',
-    yAxisCalloutData: '35%',
-  },
-  {
-    x: 25,
-    y: 8000,
-    xAxisCalloutData: '2018/01/15',
-    yAxisCalloutData: '45%',
-  },
-  {
-    x: 30,
-    y: 14000,
-    xAxisCalloutData: '2018/01/28',
-    yAxisCalloutData: '65%',
-  },
-  {
-    x: 35,
-    y: 16000,
-    xAxisCalloutData: '2018/02/01',
-    yAxisCalloutData: '75%',
-  },
-  {
-    x: 40,
-    y: 10000,
-    xAxisCalloutData: '2018/03/01',
-    yAxisCalloutData: '55%',
-  },
-  {
-    x: 45,
-    y: 9060,
-    xAxisCalloutData: '2018/03/15',
-    yAxisCalloutData: '43%',
-  },
-  {
-    x: 50,
-    y: 9000,
-    xAxisCalloutData: '2018/03/28',
-    yAxisCalloutData: '18%',
-  },
-  {
-    x: 55,
-    y: 18000,
-    xAxisCalloutData: '2018/04/04',
-    yAxisCalloutData: '100%',
-  },
-  {
-    x: 60,
-    y: 12000,
-    xAxisCalloutData: '2018/04/15',
-    yAxisCalloutData: '85%',
-  },
-  {
-    x: 65,
-    y: 3000,
-    xAxisCalloutData: '2018/05/05',
-    yAxisCalloutData: '5%',
-  },
-  {
-    x: 70,
-    y: 14000,
-    xAxisCalloutData: '2018/06/01',
-    yAxisCalloutData: '60%',
-  },
-  {
-    x: 75,
-    y: 9976,
-    xAxisCalloutData: '2018/01/15',
-    yAxisCalloutData: '34%',
-  },
-  {
-    x: 80,
-    y: 11000,
-    xAxisCalloutData: '2018/04/30',
-    yAxisCalloutData: '60%',
-  },
-  {
-    x: 85,
-    y: 17000,
-    xAxisCalloutData: '2018/05/04',
-    yAxisCalloutData: '35%',
-  },
-  {
-    x: 90,
-    y: 12000,
-    xAxisCalloutData: '2018/06/01',
-    yAxisCalloutData: '50%',
-  },
-];
+export interface IChartDataPoints {
+  key: string;
+  value: number;
+}
 
-const defaultChartData:IChartProps = {
-  chartTitle: 'Area chart sample',
-  lineChartData: [
+
+export interface IAreachartWebPartProps {
+  labels: Array<{uniqueId: string, label: string, sortIdx: number}>;
+  datasets: Array<IChartDataset>;
+
+}
+
+const inputs = {
+  min: 1,
+  max: 100,
+  count: 8,
+  decimals: 2,
+  continuity: 1
+};
+
+const generateLabels = (): Array<string> => {
+  const months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
+  
+  const res = months.slice(0, inputs.count);
+  
+  return res;
+};
+
+const generateData = (): Array<number> => {
+
+  const results: Array<number> = [];
+  
+  for(let i = 0; i < inputs.count; i++) {
+    const val = Math.floor(Math.random() * (inputs.min - inputs.max + 1)) + inputs.max;
+    results.push(val);
+  }
+
+  return results;
+  
+};
+
+const defaultChartData = {
+  labels: generateLabels(), 
+  datasets: [
     {
-      legend: 'Sample 1',
-      data: chart1Points,
-    },
-    {
-      legend: 'Sample 2',
-      data: chart2Points
+      label: 'Sample Dataset 1',
+      data: generateData(),
+      borderColor: '#9B2743',
+      backgroundColor: "#205493"
     }
   ]
 }
 
 export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWebPartProps> {
   
-  private onChartDataChanged(newValue: string): void {
-    try 
-    {
-      if(newValue === undefined) {
-          const chartData: IChartProps = defaultChartData;
-          this.properties.chartData = chartData;
-          this.properties.chartDataString = JSON.stringify(defaultChartData);
-      }
-      else {
-      //essentially don't set the new data string value if it doesn't parse.
-      const chartData:IChartProps = JSON.parse(newValue);
-      this.properties.chartData = chartData;
-      this.properties.chartDataString = newValue;
-      }
-    }
-    catch(e) {
-      console.log(e);
-    }
-  }
+ 
 
   public render(): void {
     
     let chartData = defaultChartData;
     try {
-      if(this.properties.chartDataString) {
-        chartData = JSON.parse(this.properties.chartDataString);
+      if(this.properties.datasets) {
+       
+        const data = this.properties.datasets.map((dataset: IChartDataset) => {
+
+          return {
+            label: dataset.label,
+            data: dataset.data.map((mapData:IChartDataPoints) => { return mapData.value }),
+            borderColor:dataset.lineColor,
+            backgroundColor: dataset.fillColor
+          }
+
+        });
+      
+       
+        chartData = {
+          labels: this.properties.labels.map(data => data.label),
+          datasets: data
+        };
       }
     }
     catch {
@@ -279,16 +137,94 @@ export default class AreachartWebPart extends BaseClientSideWebPart<IAreachartWe
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyFieldMonacoEditor('chartDataString', {
-                  key: 'chartDataEditor',
-                  
-                  value: this.properties.chartDataString !== "" && this.properties.chartDataString !== undefined ? this.properties.chartDataString : JSON.stringify(defaultChartData),
-                  showMiniMap: true,
-                  onChange: this.onChartDataChanged,
-                  language:"json",
-                  showLineNumbers:true,
-                  
+                PropertyFieldCollectionData('labels', {
+                  key: 'labels',
+                  label: "Manage Labels",
+                  panelHeader: "Set Labels",
+                  manageBtnLabel: "Manage Labels",
+                  value: this.properties.labels,
+                  fields: [
+                    {
+                      id: "label",
+                      title: "Label",
+                      type: CustomCollectionFieldType.string,
+                      required: true
+                    }
+                  ]
                 }),
+                PropertyFieldCollectionData('datasets', {
+                  key: 'datasets',
+                  label: "Data Sets",
+                  panelHeader: "Collection Data Set Header",
+                  manageBtnLabel: "Manage Datasets",
+                  value: this.properties.datasets,
+                  fields: [
+                    {
+                      id: "label",
+                      title:"Label",
+                      type: CustomCollectionFieldType.string,
+                      required: true
+                    },
+                    {
+                      id: "data",
+                      title: "DataSet",
+                      type: CustomCollectionFieldType.custom,
+                      onCustomRender: (field: any, value: any, onUpdate: (fieldId: string, value: any) => void, item, itemId, onError) => {  
+
+                        const fieldId = field.id;
+                        return (
+                          React.createElement(DataModal, {
+                            index: 1,
+                            itemId: itemId,
+                            labels: this.properties.labels,
+                            data: value,
+                            onSave: (data: any) => { onUpdate(fieldId, data); } 
+                          })
+                        );
+
+                      }
+                    },
+                    {
+                      id: "fillColor",
+                      title: "Fill Color",
+                      type: CustomCollectionFieldType.color,
+                    },
+                    {
+                      id: "lineColor",
+                      title: "Line Color",
+                      type: CustomCollectionFieldType.color,
+                    },
+                    {
+                      id: "fill",
+                      title: "Fill Type",
+                      type: CustomCollectionFieldType.dropdown,
+                      options: [
+                        {
+                          key: "none",
+                          text: "None"
+                        },
+                        {
+                          key: "origin",
+                          text: "Origin"
+                        },
+                        {
+                          key: "start",
+                          text: "Start"
+                        },
+                        {
+                          key: "end",
+                          text: "End"
+                        },
+                      ],
+                    },
+                    {
+                      id: "smooth",
+                      title: "Smooth",
+                      type: CustomCollectionFieldType.boolean
+                      
+                    }
+                  ]
+                })
               ]
             }
           ]

@@ -34,6 +34,8 @@
     "@types/react-webcam": "^3.0.0",
     "b64-to-blob": "^1.2.19",
     "canvas": "^2.11.2",
+    "chart.js": "^4.4.3",
+    "fluentui-editable-grid": "^1.12.1",
     "html2canvas": "^1.4.1",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

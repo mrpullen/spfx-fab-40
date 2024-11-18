@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
-import styles from './PivotControl.module.scss';
 import { IPivotControlProps } from './IPivotControlProps';
 import { RichText } from '@pnp/spfx-controls-react/lib/RichText';
 import { Pivot, PivotItem } from '@fluentui/react';
@@ -19,7 +18,7 @@ export default class PivotControl extends React.Component<IPivotControlProps, {}
 
     return (
       <React.Fragment>
-        <section className={`${styles.pivot}`}>
+        <section>
           <Pivot overflowBehavior={'menu'} overflowAriaLabel="More Items" linkFormat={linkFormat}>
             {sectionData.map((sectionData: ISectionData) => {
               return (

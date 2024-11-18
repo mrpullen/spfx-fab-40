@@ -6,7 +6,6 @@ import {
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'AccordionWebPartStrings';
 import AccordionList from './components/AccordionList';
@@ -57,23 +56,6 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   }
  
 
-  protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
-    if (!currentTheme) {
-      return;
-    }
-
-    const {
-      semanticColors
-    } = currentTheme;
-
-    if (semanticColors) {
-      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || null);
-      this.domElement.style.setProperty('--link', semanticColors.link || null);
-      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || null);
-    }
-
-  }
-
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
   }
@@ -115,20 +97,27 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
                       
                     },
                     {
-                      "id": "className",
-                      "title": "Class",
-                      "type": CustomCollectionFieldType.string,
+                      "id": "fontColor",
+                      "title": "Font Color",
+                      "type": CustomCollectionFieldType.color,
+                    },
+                    {
+                      "id": "backgroundColor",
+                      "title": "Background Color",
+                      "type": CustomCollectionFieldType.color,
                     },
                     {
                       "id": "collapsedIcon",
                       "title": "Accordion Closed Icon",
                       "type": CustomCollectionFieldType.fabricIcon,
+                      "iconFieldRenderMode": 'picker',
                       "defaultValue": "ChevronRight"
                     },
                     {
                       "id": "expandedIcon",
                       "title": "Accordion Open Icon",
                       "type": CustomCollectionFieldType.fabricIcon,
+                      "iconFieldRenderMode": 'picker',
                       "defaultValue": "ChevronDown"
                     },
                     {

@@ -1,5 +1,5 @@
-import { IChartProps } from "@fluentui/react-charting";
+import { ChartData } from "chart.js";
 
 export interface IAreaChartComponentProps {
-  chartData: IChartProps;
+  chartData: ChartData;
 }
