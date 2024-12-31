@@ -16,8 +16,8 @@
   "supportsThemeVariants": true,
 
   "preconfiguredEntries": [{
-    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
-    "group": { "default": "Advanced" },
+    "groupId": "f3502f39-6bea-423b-92e2-de8ea4a88f6f", // Advanced
+     "group": { "default": "SPFx Fab 40" },
     "title": { "default": "pivot" },
     "description": { "default": "pivot description" },
     "officeFabricIconFontName": "Page",

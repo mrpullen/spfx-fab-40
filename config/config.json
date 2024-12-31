@@ -105,6 +105,14 @@
           "manifest": "./src/webparts/quickPoll/QuickPollWebPart.manifest.json"
         }
       ]
+    },
+    "us-map-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/usMap/UsMapWebPart.js",
+          "manifest": "./src/webparts/usMap/UsMapWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -123,6 +131,7 @@
     "VerticalBarChartWebPartStrings": "lib/webparts/verticalBarChart/loc/{locale}.js",
     "HeadShotWebPartStrings": "lib/webparts/headShot/loc/{locale}.js",
     "PivotWebPartStrings": "lib/webparts/pivot/loc/{locale}.js",
-    "QuickPollWebPartStrings": "lib/webparts/quickPoll/loc/{locale}.js"
+    "QuickPollWebPartStrings": "lib/webparts/quickPoll/loc/{locale}.js",
+    "UsMapWebPartStrings": "lib/webparts/usMap/loc/{locale}.js"
   }
 }

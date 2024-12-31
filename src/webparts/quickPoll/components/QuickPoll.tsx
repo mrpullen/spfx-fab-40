@@ -14,7 +14,7 @@ import { IQuickPollState } from "./IQuickPollState";
 import OptionsContainer from "./OptionsContainer/OptionsContainer";
 import QuickPollService, { IQuickPollService } from "../../../service/QuickPollService";
 
-import * as moment from "moment";
+import moment from "moment";
 import MessageContainer from "./MessageContainer/MessageContainer";
 import * as _ from "lodash";
 import UserService, { IUserService } from "../../../service/UserService";

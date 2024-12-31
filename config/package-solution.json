@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "spfx-fab-40-client-side-solution",
+    "name": "spfx Fab 40 Redux",
     "id": "0f15d0ec-36bd-4543-bb1e-29f3c68d689b",
-    "version": "1.0.0.0",
+    "version": "1.0.0.2",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -30,7 +30,7 @@
         "title": "spfx-fab-40 Feature",
         "description": "The feature that activates elements of the spfx-fab-40 solution.",
         "id": "70162b09-c322-4a00-a69b-d6078efea87d",
-        "version": "1.0.0.0"
+        "version": "1.0.0.2"
       }
     ]
   },
