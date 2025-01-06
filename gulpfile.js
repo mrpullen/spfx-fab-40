@@ -9,6 +9,12 @@ build.addSuppression(
 
 
 build.addSuppression(
+  /.\/node_modules/
+);
+
+
+
+build.addSuppression(
   `./node_modules/.pnpm/handlebars-helpers*`
 );
 
