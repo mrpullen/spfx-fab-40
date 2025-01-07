@@ -89,7 +89,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
               {geographies.map(geo => {
 
                 const cur = states.filter(s => s.val === geo.id)[0];
-                //  const fontColor = cur !== null ? cur.fontColor : "#FFC";
+                const fontColor = cur !== undefined && cur.fontColor ? cur.fontColor : "#FFC";
                 const backgroundColor = cur !== undefined && cur.backgroundColor ? cur.backgroundColor : "#D6D6DA";
                 const id = cur !== undefined && cur.id ? cur.id : "hw";
                 // const region = cur !== null ? cur.region : "region";
@@ -100,6 +100,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
                     key={geo.rsmKey}
                     stroke="#FFF"
                     geography={geo}
+                    color={fontColor}
                     fill={backgroundColor}
                     data-tip={id}
                     onMouseEnter={() => {
@@ -140,7 +141,9 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
                       centroid[0] < -67 &&
                       (Object.keys(offsets).indexOf(id) === -1 ? (
                         <Marker coordinates={centroid}>
-                          <text y={cur.offsetY ? cur.offsetY : 2} x={cur.offsetX ? cur.offsetX : 0} fontSize={14} textAnchor="middle" color={fontColor}
+                          <text y={cur.offsetY ? cur.offsetY : 2} x={cur.offsetX ? cur.offsetX : 0} fontSize={14} textAnchor="middle" 
+                          color={fontColor}
+                            fill={fontColor}
                             onMouseDown={() => {
                               const cur = states.filter(s => s.val === geo.id)[0];
                               if (cur.data.Link.Url !== undefined) {
@@ -160,6 +163,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
                         </Marker>
                       ) : (
                         <Annotation
+                          color={fontColor}
                           subject={centroid}
                           dx={offsets[id][0]}
                           dy={offsets[id][1]} connectorProps={{}}
@@ -170,7 +174,8 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
                           onMouseLeave={() => {
                             this.setToolTipContent(undefined);
                           }}>
-                          <text x={cur.offsetX ? cur.offsetX : 4} y={cur.offsetY ? cur.offsetY : 0} fontSize={14} alignmentBaseline="middle"
+                          <text color={fontColor} x={cur.offsetX ? cur.offsetX : 4} y={cur.offsetY ? cur.offsetY : 0} fontSize={14} alignmentBaseline="middle"
+                            fill={fontColor}
                             onMouseEnter={() => {
                               const cur = states.filter(s => s.val === geo.id)[0];
                               this.setToolTipContent(cur);
