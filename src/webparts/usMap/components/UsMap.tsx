@@ -29,7 +29,7 @@ const offsets: { [key: string]: [number, number] } = {
   DC: [49, 21]
 };
 
-
+// 
 interface IUSMapState {
   markers: Array<IMarker>;
   states: Array<IState>;
@@ -37,6 +37,28 @@ interface IUSMapState {
 }
 
 // https://www.react-simple-maps.io/docs/getting-started/
+
+
+// A Component to render a map of the 50 state US map.
+/**
+ * USMap component renders a map of the United States with interactive states and markers.
+ * 
+ * @extends {React.Component<IUSMapProps, IUSMapState>}
+ * 
+ * @property {MapService} mapService - Service to fetch map data.
+ * 
+ * @constructor
+ * @param {IUSMapProps} props - Component properties.
+ * 
+ * @method componentDidMount - Fetches states and locations data and updates the component state.
+ * @method setToolTipContent - Sets the tooltip content based on the provided marker or state.
+ * @method render - Renders the US map with states and markers.
+ * 
+ * @typedef {Object} IUSMapProps - Properties for the USMap component.
+ * @typedef {Object} IUSMapState - State for the USMap component.
+ * @typedef {Object} IMarker - Marker data structure.
+ * @typedef {Object} IState - State data structure.
+ */
 export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
 
   private mapService: MapService;
@@ -76,6 +98,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
 
   public render(): React.ReactElement<IUSMapProps> {
     const { markers, states } = this.state;
+    const stateMap = new Map(states.map(state => [state.val, state]));
 
 
     const ren = (
@@ -88,7 +111,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
             <>
               {geographies.map(geo => {
 
-                const cur = states.filter(s => s.val === geo.id)[0];
+                const cur = stateMap.get(geo.id);
                 const fontColor = cur !== undefined && cur.fontColor ? cur.fontColor : "#FFC";
                 const backgroundColor = cur !== undefined && cur.backgroundColor ? cur.backgroundColor : "#D6D6DA";
                 const id = cur !== undefined && cur.id ? cur.id : "hw";
@@ -218,7 +241,7 @@ export default class USMap extends React.Component<IUSMapProps, IUSMapState> {
               x={marker.offsetX ? marker.offsetX : 0}
               style={{ fontFamily: "system-ui", fill: `${marker.fontColor}` }}
             >
-              {/*name*/}
+              {}
             </text>
           </Marker>
         ))}
